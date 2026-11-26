@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AI Search",
+  "version": "0.1.0",
+  "identifier": "io.github.kkrampis.aisearch",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "AI Search",
+        "width": 1280,
+        "height": 840,
+        "minWidth": 860,
+        "minHeight": 560,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb", "rpm", "appimage", "app", "dmg"],
+    "category": "Productivity",
+    "shortDescription": "Google AI Mode, with a searchable local library",
+    "longDescription": "A lightweight desktop client for Google AI Mode searches and follow-ups. Conversations are saved locally as JSON and Markdown, organised into projects, fully searchable, and optionally synced to GitHub and JSONBin.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "11.0"
+    }
+  }
+}

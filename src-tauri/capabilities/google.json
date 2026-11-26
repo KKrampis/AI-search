@@ -1,0 +1,11 @@
+{
+  "$schema": "../gen/schemas/remote-schema.json",
+  "identifier": "google-bridge",
+  "description": "The Google window may only report results back to the app — nothing else.",
+  "windows": ["google"],
+  "local": false,
+  "remote": {
+    "urls": ["https://www.google.com/*", "https://*.google.com/*"]
+  },
+  "permissions": ["allow-bridge-report"]
+}

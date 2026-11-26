@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-reload-library"
+description = "Enables the reload_library command without any pre-configured scope."
+commands.allow = ["reload_library"]
+
+[[permission]]
+identifier = "deny-reload-library"
+description = "Denies the reload_library command without any pre-configured scope."
+commands.deny = ["reload_library"]

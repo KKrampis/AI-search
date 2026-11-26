@@ -1,0 +1,33 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main",
+  "description": "The app's own UI (bundled, local content only).",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "dialog:allow-ask",
+    "allow-get-settings",
+    "allow-save-settings",
+    "allow-default-library-path",
+    "allow-load-library",
+    "allow-reload-library",
+    "allow-save-project",
+    "allow-delete-project",
+    "allow-save-conversation",
+    "allow-delete-conversation",
+    "allow-export-conversation",
+    "allow-reveal-library",
+    "allow-open-url",
+    "allow-save-debug-file",
+    "allow-google-ask",
+    "allow-google-cancel",
+    "allow-google-show",
+    "allow-google-home",
+    "allow-google-debug-dump",
+    "allow-sync-github",
+    "allow-sync-jsonbin",
+    "allow-sync-all"
+  ]
+}

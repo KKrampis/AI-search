@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-sync-jsonbin"
+description = "Enables the sync_jsonbin command without any pre-configured scope."
+commands.allow = ["sync_jsonbin"]
+
+[[permission]]
+identifier = "deny-sync-jsonbin"
+description = "Denies the sync_jsonbin command without any pre-configured scope."
+commands.deny = ["sync_jsonbin"]

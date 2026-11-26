@@ -1,0 +1,36 @@
+{
+  "name": "ai-search",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Lightweight desktop app for Google AI Mode searches, with a local Claude-style library and GitHub / JSONBin sync.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run",
+    "tauri": "tauri",
+    "app:dev": "tauri dev",
+    "app:build": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.12.5",
+    "@tauri-apps/plugin-dialog": "^2.8.4",
+    "dompurify": "^3.5.0",
+    "marked": "^18.3.0",
+    "minisearch": "^7.2.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.2",
+    "@tauri-apps/cli": "^2.12.6",
+    "@tsconfig/svelte": "^5.0.9",
+    "@types/jsdom": "^30.0.0",
+    "jsdom": "^31.0.1",
+    "svelte": "^5.59.2",
+    "svelte-check": "^4.7.8",
+    "typescript": "~5.9.3",
+    "vite": "^8.4.0",
+    "vitest": "^5.1.2"
+  }
+}

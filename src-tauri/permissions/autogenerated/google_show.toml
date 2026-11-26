@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-google-show"
+description = "Enables the google_show command without any pre-configured scope."
+commands.allow = ["google_show"]
+
+[[permission]]
+identifier = "deny-google-show"
+description = "Denies the google_show command without any pre-configured scope."
+commands.deny = ["google_show"]
