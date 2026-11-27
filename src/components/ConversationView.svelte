@@ -159,6 +159,8 @@
   .tools { display: flex; align-items: center; gap: 4px; flex: none; }
   .scroll { flex: 1; overflow-y: auto; min-height: 0; }
   .thread { max-width: 780px; margin: 0 auto; padding: 8px 28px 40px; }
+  /* No divider above the first question. */
+  .thread > :global(.user:first-child) { border-top: none; padding-top: 0; margin-top: 22px; }
   .dock { flex: none; max-width: 780px; width: 100%; margin: 0 auto; padding: 0 28px 14px; }
   .disclaimer { text-align: center; font-size: 11.5px; color: var(--text-3); margin-top: 7px; }
 </style>

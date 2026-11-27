@@ -88,12 +88,12 @@
   .composer {
     background: var(--bg-input);
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 14px;
     box-shadow: var(--shadow);
     padding: 12px 12px 10px 16px;
     transition: border-color 0.12s, box-shadow 0.12s;
   }
-  .composer:focus-within { border-color: var(--border-strong); box-shadow: var(--shadow), 0 0 0 3px var(--accent-soft); }
+  .composer:focus-within { border-color: var(--accent); box-shadow: var(--shadow), 0 0 0 4px var(--accent-soft); }
   textarea {
     width: 100%; border: none; outline: none; resize: none; background: transparent;
     font-size: 15px; line-height: 1.5; max-height: 240px; padding: 2px 0; display: block;
@@ -104,12 +104,12 @@
   .left, .right { display: flex; align-items: center; gap: 8px; min-width: 0; }
   .hint { font-size: 12px; color: var(--text-3); }
   .send {
-    width: 32px; height: 32px; border-radius: 10px; border: none;
+    width: 34px; height: 34px; border-radius: 50%; border: none;
     display: grid; place-items: center;
-    background: var(--accent); color: var(--accent-text);
-    transition: background 0.12s, opacity 0.12s;
+    background: var(--gradient); color: #fff;
+    transition: filter 0.12s, opacity 0.12s, transform 0.12s;
   }
-  .send:hover:not(:disabled) { background: var(--accent-hover); }
+  .send:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
   .send:disabled { opacity: 0.35; cursor: default; }
   .send.stop { background: var(--text); color: var(--bg); }
 </style>

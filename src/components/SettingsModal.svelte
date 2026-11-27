@@ -324,10 +324,10 @@
     display: grid; grid-template-columns: 190px 1fr; grid-template-rows: 1fr auto; overflow: hidden;
   }
   .tabs { grid-row: span 2; background: var(--bg-sidebar); border-right: 1px solid var(--border); padding: 18px 10px; display: flex; flex-direction: column; gap: 2px; }
-  .tabs-title { font-family: var(--font-serif); font-size: 18px; padding: 0 10px 12px; }
+  .tabs-title { font-family: var(--font-display); font-size: 17px; font-weight: 800; letter-spacing: -0.02em; padding: 0 10px 12px; }
   .tab { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border: none; background: none; border-radius: var(--radius-sm); color: var(--text-2); text-align: left; }
   .tab:hover { background: var(--bg-hover); color: var(--text); }
-  .tab.active { background: var(--bg-active); color: var(--text); font-weight: 550; }
+  .tab.active { background: var(--bg-active); color: var(--accent); font-weight: 600; }
   .content { overflow-y: auto; padding: 22px 28px 20px; position: relative; }
   .close { position: absolute; top: 14px; right: 14px; }
   h2 { margin: 0 0 14px; font-size: 19px; font-weight: 650; }
