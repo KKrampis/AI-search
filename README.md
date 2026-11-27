@@ -36,7 +36,7 @@ web engine the OS already has (WebKit on macOS, WebKitGTK on Linux), with a smal
 - **Sync** to a GitHub repository (one commit per sync through the API, so git doesn't need to be installed)
   and/or JSONBin.io. Sync works in both directions: conversations are merged per message, and deletions
   propagate.
-- Light and dark themes, plus keyboard shortcuts: ⌘/Ctrl N (new search), ⌘/Ctrl K (search),
+- Themes: Light, Lagoon Dark, Tokyo Night, Slate and Muted Gray (or match the system), plus keyboard shortcuts: ⌘/Ctrl N (new search), ⌘/Ctrl K (search),
   ⌘/Ctrl , (settings), Shift ⏎ (new line).
 
 ## How the Google part works

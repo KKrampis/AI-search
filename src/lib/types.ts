@@ -78,7 +78,7 @@ export interface JsonbinSettings {
   chunkKb: number;
 }
 
-export type Theme = "system" | "light" | "dark";
+export type Theme = "system" | "light" | "dark" | "tokyo-night" | "slate" | "muted-gray";
 
 export interface Settings {
   libraryPath: string;
