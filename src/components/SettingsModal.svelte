@@ -2,9 +2,18 @@
   import { open as openDialog } from "@tauri-apps/plugin-dialog";
   import Icon from "./Icon.svelte";
   import { api, errorText } from "../lib/api";
-  import { app, reloadLibrary, saveSettings, toast } from "../lib/state.svelte";
+  import { app, applyTheme, reloadLibrary, saveSettings, toast } from "../lib/state.svelte";
   import { setGoogleVisible } from "../lib/google.svelte";
   import type { Settings, SyncReport } from "../lib/types";
+
+  const THEMES: { id: Settings["theme"]; label: string; bg: string; side: string; text: string; accent: string }[] = [
+    { id: "system", label: "Match system", bg: "linear-gradient(135deg, #f6f8fb 50%, #0e141b 50%)", side: "transparent", text: "#64748b", accent: "linear-gradient(135deg, #14b8a6, #6366f1)" },
+    { id: "light", label: "Light", bg: "#f6f8fb", side: "#edf1f6", text: "#0f172a", accent: "linear-gradient(135deg, #14b8a6, #6366f1)" },
+    { id: "dark", label: "Lagoon Dark", bg: "#0e141b", side: "#0a0f15", text: "#e6edf5", accent: "linear-gradient(135deg, #2dd4bf, #818cf8)" },
+    { id: "tokyo-night", label: "Tokyo Night", bg: "#1a1b26", side: "#16161e", text: "#c0caf5", accent: "linear-gradient(135deg, #7aa2f7, #bb9af7)" },
+    { id: "slate", label: "Slate", bg: "#1e293b", side: "#172033", text: "#e2e8f0", accent: "linear-gradient(135deg, #60a5fa, #a78bfa)" },
+    { id: "muted-gray", label: "Muted Gray", bg: "#1f1f21", side: "#19191b", text: "#d6d6da", accent: "linear-gradient(135deg, #b6bdc9, #7d8592)" },
+  ];
 
   const tabs = [
     { id: "general", label: "General", icon: "settings" },
@@ -59,6 +68,12 @@
 
   function close() {
     app.showSettings = false;
+    applyTheme(); // drop an unsaved theme preview
+  }
+
+  function previewTheme(id: Settings["theme"]) {
+    draft.theme = id;
+    document.documentElement.dataset.theme = id === "system" ? "" : id;
   }
 
   async function browse() {
@@ -166,11 +181,20 @@
         </label>
         <div class="field">
           <span>Theme</span>
-          <select class="select" bind:value={draft.theme} style="width:200px">
-            <option value="system">Match system</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
+          <div class="themes">
+            {#each THEMES as t (t.id)}
+              <button class="theme" class:active={draft.theme === t.id} onclick={() => previewTheme(t.id)} title={t.label}>
+                <span class="swatch" style:background={t.bg}>
+                  <span class="sw-side" style:background={t.side}></span>
+                  <span class="sw-line" style:background={t.text}></span>
+                  <span class="sw-line short" style:background={t.text} style:opacity="0.5"></span>
+                  <span class="sw-dot" style:background={t.accent}></span>
+                </span>
+                <span class="theme-name">{t.label}</span>
+              </button>
+            {/each}
+          </div>
+          <small>“Match system” uses Light or Lagoon Dark, following your OS setting.</small>
         </div>
         {#if app.loadErrors.length}
           <div class="warnbox">
@@ -346,6 +370,16 @@
   .adv summary { cursor: pointer; font-weight: 600; color: var(--text-2); margin-bottom: 12px; }
   .warnbox { padding: 10px 12px; border-radius: var(--radius-sm); background: rgba(168, 107, 0, 0.1); font-size: 13px; }
   .warnbox ul { margin: 6px 0 0; padding-left: 18px; font-size: 12px; }
+  .themes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 520px; }
+  .theme { display: flex; flex-direction: column; gap: 6px; padding: 6px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-elev); text-align: left; }
+  .theme:hover { border-color: var(--border-strong); }
+  .theme.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .swatch { position: relative; height: 58px; border-radius: 7px; overflow: hidden; border: 1px solid rgba(127, 127, 127, 0.2); }
+  .sw-side { position: absolute; left: 0; top: 0; bottom: 0; width: 28%; }
+  .sw-line { position: absolute; left: 36%; top: 14px; width: 48%; height: 5px; border-radius: 3px; }
+  .sw-line.short { top: 25px; width: 32%; }
+  .sw-dot { position: absolute; right: 9px; bottom: 9px; width: 16px; height: 16px; border-radius: 50%; }
+  .theme-name { font-size: 12.5px; font-weight: 550; padding: 0 2px 2px; }
   .about { padding-left: 18px; color: var(--text-2); line-height: 1.6; margin: 0 0 18px; }
   .about li { margin-bottom: 6px; }
   .foot { grid-column: 2; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--border); }

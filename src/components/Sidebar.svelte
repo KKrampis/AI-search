@@ -103,12 +103,12 @@
   }
   .brand { display: flex; align-items: center; gap: 9px; padding: 16px 16px 12px; font-family: var(--font-display); font-size: 16.5px; font-weight: 800; letter-spacing: -0.02em; }
   .thin { font-weight: 400; color: var(--text-2); margin-left: 1px; }
-  .logo { width: 26px; height: 26px; border-radius: 8px; box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3); }
+  .logo { width: 26px; height: 26px; border-radius: 8px; box-shadow: 0 2px 6px var(--accent-glow); }
   .nav { padding: 4px 8px; display: flex; flex-direction: column; gap: 1px; }
   .new {
     display: flex; align-items: center; gap: 9px; padding: 8px 10px; margin: 0 0 8px;
     border: 1px solid transparent; background: var(--accent); color: var(--accent-text);
-    border-radius: var(--radius); font-weight: 600; box-shadow: 0 1px 3px rgba(13, 148, 136, 0.35);
+    border-radius: var(--radius); font-weight: 600; box-shadow: 0 1px 3px var(--accent-glow);
     transition: background 0.12s;
   }
   .new:hover { background: var(--accent-hover); }

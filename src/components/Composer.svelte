@@ -106,7 +106,7 @@
   .send {
     width: 34px; height: 34px; border-radius: 50%; border: none;
     display: grid; place-items: center;
-    background: var(--gradient); color: #fff;
+    background: var(--gradient); color: var(--on-gradient);
     transition: filter 0.12s, opacity 0.12s, transform 0.12s;
   }
   .send:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }

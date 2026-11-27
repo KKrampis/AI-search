@@ -157,6 +157,7 @@ export async function reloadLibrary() {
 export function applyTheme() {
   const t = app.settings?.theme ?? "system";
   document.documentElement.dataset.theme = t === "system" ? "" : t;
+  document.documentElement.style.colorScheme = t === "light" ? "light" : t === "system" ? "" : "dark";
 }
 
 export async function saveSettings(next: Settings) {
