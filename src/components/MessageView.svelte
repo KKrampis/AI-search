@@ -3,7 +3,7 @@
   import { renderMarkdown } from "../lib/markdown";
   import { api } from "../lib/api";
   import { app, toast } from "../lib/state.svelte";
-  import { ask, setGoogleVisible, stop } from "../lib/google.svelte";
+  import { ask, openSelectorSettings, saveGoogleSnapshot, setGoogleVisible, stop } from "../lib/google.svelte";
   import { domainOf } from "../lib/util";
   import type { Conversation, Message } from "../lib/types";
 
@@ -78,6 +78,16 @@
           <div class="grow">{message.note || (message.status === "stopped" ? "Stopped." : "Something went wrong.")}</div>
           <button class="btn sm" onclick={retry} disabled={!!app.busy}><Icon name="refresh" size={13} /> Retry</button>
           <button class="btn sm ghost" onclick={() => setGoogleVisible(true)}>Google window</button>
+        </div>
+      {:else if message.note && /generic fallback|container not found/i.test(message.note)}
+        <div class="notice warn fallback">
+          <Icon name="alert" size={15} />
+          <div class="grow">
+            Google's page layout wasn't recognised, so this answer was captured with a generic method and may include extra
+            text from the page.
+          </div>
+          <button class="btn sm" onclick={saveGoogleSnapshot} title="Saves the current Google page so the selectors can be fixed">Save page snapshot</button>
+          <button class="btn sm ghost" onclick={openSelectorSettings}>Selector settings</button>
         </div>
       {:else if message.note}
         <div class="note">{message.note}</div>

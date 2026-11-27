@@ -68,6 +68,7 @@
 
   function close() {
     app.showSettings = false;
+    app.settingsAdvanced = false;
     applyTheme(); // drop an unsaved theme preview
   }
 
@@ -211,6 +212,7 @@
         <div class="row" style="margin-bottom:18px">
           <button class="btn" onclick={() => setGoogleVisible(true)}><Icon name="eye" size={14} /> Show Google window</button>
           <button class="btn" onclick={() => api.googleHome().then(() => setGoogleVisible(true))}><Icon name="home" size={14} /> Open AI Mode home</button>
+          <button class="btn" onclick={snapshot} title="Saves the Google window's current page to the library's .aisearch/debug folder"><Icon name="download" size={14} /> Save page snapshot</button>
         </div>
         <label class="check">
           <input type="checkbox" bind:checked={draft.google.showWindow} />
@@ -226,8 +228,8 @@
           <small>Increase this if long answers get cut off.</small>
         </label>
 
-        <details class="adv">
-          <summary>Advanced</summary>
+        <details class="adv" open={app.settingsAdvanced}>
+          <summary>Advanced: page selectors and user agent</summary>
           <label class="field">
             <span>User agent</span>
             <input class="input mono" bind:value={draft.google.userAgent} placeholder="Default (on Linux, a Safari user agent)" />

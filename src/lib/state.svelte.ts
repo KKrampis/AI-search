@@ -42,6 +42,8 @@ class AppState {
 
   showSettings = $state(false);
   settingsTab = $state<"general" | "google" | "sync" | "about">("general");
+  /** Open Settings → Google with the page-selector section expanded. */
+  settingsAdvanced = $state(false);
   dialog = $state<DialogState | null>(null);
   projectEditor = $state<ProjectEditorState | null>(null);
   toasts = $state<Toast[]>([]);

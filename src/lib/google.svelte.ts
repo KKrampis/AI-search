@@ -181,6 +181,21 @@ export async function stop() {
   await fail(j, "Stopped.", "stopped");
 }
 
+/** Save the Google page's HTML to <library>/.aisearch/debug for selector tuning. */
+export async function saveGoogleSnapshot() {
+  try {
+    await api.googleDebugDump(); // the bridge replies with a "debug" report, saved in handle()
+  } catch (e) {
+    toast(errorText(e), "error");
+  }
+}
+
+export function openSelectorSettings() {
+  app.settingsTab = "google";
+  app.settingsAdvanced = true;
+  app.showSettings = true;
+}
+
 export async function setGoogleVisible(visible: boolean) {
   try {
     await api.googleShow(visible);
@@ -194,7 +209,7 @@ async function handle(r: GoogleReport) {
   if (r.kind === "debug") {
     try {
       const path = await api.saveDebugFile(`google-page-${new Date().toISOString().replace(/[:.]/g, "-")}.html`, r.html ?? "");
-      toast(`Saved page snapshot to ${path}`, "success", undefined, 8000);
+      toast(`Saved the Google page to ${path}`, "success", { label: "Open folder", run: () => void api.revealDebug() }, 12000);
     } catch (e) {
       toast("Couldn't save snapshot: " + errorText(e), "error");
     }
