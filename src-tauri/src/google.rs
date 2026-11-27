@@ -17,13 +17,13 @@ pub const GOOGLE_LABEL: &str = "google";
 pub const MAIN_LABEL: &str = "main";
 const BRIDGE_JS: &str = include_str!("bridge/google_bridge.js");
 
-/// WebKitGTK's default UA is often served Google's reduced "basic" page.
-/// A Safari UA matches the actual engine (WebKit) and gets the full UI.
-#[cfg(target_os = "linux")]
-const FALLBACK_UA: Option<&str> =
-    Some("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15");
-#[cfg(not(target_os = "linux"))]
-const FALLBACK_UA: Option<&str> = None;
+/// Embedded WebKit does not identify as Safari: macOS WKWebView sends
+/// "…AppleWebKit/605.1.15 (KHTML, like Gecko)" with no "Version/… Safari/…"
+/// token, and WebKitGTK sends its own string. Google treats both as unknown
+/// browsers and serves its stripped-down "heirloom" pages, which have no AI
+/// Mode. A Safari UA matches the real engine (WebKit) on both platforms.
+const DEFAULT_UA: &str =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15";
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -55,11 +55,7 @@ pub fn ensure_window(app: &AppHandle, s: &GoogleSettings) -> AppResult<WebviewWi
         .visible(s.show_window)
         .initialization_script(BRIDGE_JS);
     let custom = s.user_agent.trim();
-    if !custom.is_empty() {
-        b = b.user_agent(custom);
-    } else if let Some(ua) = FALLBACK_UA {
-        b = b.user_agent(ua);
-    }
+    b = b.user_agent(if custom.is_empty() { DEFAULT_UA } else { custom });
     Ok(b.build()?)
 }
 
@@ -95,6 +91,15 @@ pub fn ask(app: &AppHandle, s: &GoogleSettings, req: AskRequest) -> AppResult<()
     }
     if s.show_window {
         let _ = w.show();
+    }
+    Ok(())
+}
+
+/// Close the Google window for good (it is recreated on the next search),
+/// e.g. so a new user agent takes effect. Cookies are kept on disk.
+pub fn reset(app: &AppHandle) -> AppResult<()> {
+    if let Some(w) = app.get_webview_window(GOOGLE_LABEL) {
+        w.destroy()?;
     }
     Ok(())
 }

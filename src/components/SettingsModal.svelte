@@ -232,8 +232,8 @@
           <summary>Advanced: page selectors and user agent</summary>
           <label class="field">
             <span>User agent</span>
-            <input class="input mono" bind:value={draft.google.userAgent} placeholder="Default (on Linux, a Safari user agent)" />
-            <small>Applies the next time the app starts.</small>
+            <input class="input mono" bind:value={draft.google.userAgent} placeholder="Default: Safari (recommended)" />
+            <small>Leave empty unless Google keeps showing its basic page. Changes apply to the next search.</small>
           </label>
           <label class="field">
             <span>Answer container selectors (one per line)</span>

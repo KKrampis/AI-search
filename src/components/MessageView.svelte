@@ -77,7 +77,11 @@
           <Icon name="alert" size={15} />
           <div class="grow">{message.note || (message.status === "stopped" ? "Stopped." : "Something went wrong.")}</div>
           <button class="btn sm" onclick={retry} disabled={!!app.busy}><Icon name="refresh" size={13} /> Retry</button>
-          <button class="btn sm ghost" onclick={() => setGoogleVisible(true)}>Google window</button>
+          {#if /user agent|basic page/i.test(message.note ?? "")}
+            <button class="btn sm ghost" onclick={openSelectorSettings}>Google settings</button>
+          {:else}
+            <button class="btn sm ghost" onclick={() => setGoogleVisible(true)}>Google window</button>
+          {/if}
         </div>
       {:else if message.note && /generic fallback|container not found/i.test(message.note)}
         <div class="notice warn fallback">
