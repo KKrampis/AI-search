@@ -57,6 +57,9 @@
     <button class="nav-item" class:active={app.route.name === "search" && app.route.starred} onclick={() => go({ name: "search", starred: true })}>
       <Icon name="star" /> Starred <span class="count">{starredCount || ""}</span>
     </button>
+    <button class="nav-item" onclick={() => (app.importer = { paths: [] })}>
+      <Icon name="download" /> Import…
+    </button>
   </div>
 
   <div class="filter">

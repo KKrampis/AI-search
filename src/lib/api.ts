@@ -1,5 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
+import type { ImportFileIn } from "./importer";
 import type {
   Conversation,
   GoogleReport,
@@ -27,6 +28,8 @@ export const api = {
   revealLibrary: () => invoke<void>("reveal_library"),
   openUrl: (url: string) => invoke<void>("open_url", { url }),
   saveDebugFile: (name: string, content: string) => invoke<string>("save_debug_file", { name, content }),
+  readImportFiles: (paths: string[]) =>
+    invoke<{ files: ImportFileIn[]; skipped: string[] }>("read_import_files", { paths }),
 
   googleAsk: (request: { jobId: string; prompt: string; mode: "new" | "followup" }) =>
     invoke<void>("google_ask", { request }),

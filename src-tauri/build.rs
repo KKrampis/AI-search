@@ -17,6 +17,7 @@ fn main() {
             "reveal_library",
             "open_url",
             "save_debug_file",
+            "read_import_files",
             "google_ask",
             "google_cancel",
             "google_show",

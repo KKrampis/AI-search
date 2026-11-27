@@ -21,6 +21,7 @@
     "allow-reveal-library",
     "allow-open-url",
     "allow-save-debug-file",
+    "allow-read-import-files",
     "allow-google-ask",
     "allow-google-cancel",
     "allow-google-show",

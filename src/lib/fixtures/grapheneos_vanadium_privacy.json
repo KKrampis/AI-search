@@ -1,0 +1,52 @@
+{
+  "topic": "GrapheneOS Default Browser Privacy",
+  "browser": "Vanadium",
+  "summary": "Vanadium offers strong baseline privacy by stripping out Google tracking while prioritizing top-tier security hardening, though it lacks built-in ad blocking and advanced anti-fingerprinting tools.",
+  "strengths": [
+    {
+      "feature": "Zero telemetry",
+      "description": "Built from Chromium with Google services, crash reporting, and telemetry completely removed."
+    },
+    {
+      "feature": "Leak protection",
+      "description": "Disables peer-to-peer WebRTC by default (forcing proxied connections) and blocks websites from accessing local network interfaces, preventing sites from exposing your real IP address."
+    },
+    {
+      "feature": "Private default search",
+      "description": "Uses DuckDuckGo as the default search engine instead of Google."
+    },
+    {
+      "feature": "Industry-leading security",
+      "description": "Uses strict sandboxing, memory protections, and rapid Chromium security patches to stop malicious websites from compromising your device."
+    }
+  ],
+  "limitations_and_tradeoffs": [
+    {
+      "limitation": "No built-in ad or tracker blocking",
+      "description": "Does not include an integrated ad blocker or support browser extensions; requires network-level filtering like NextDNS, RethinkDNS, or a VPN with DNS blocking."
+    },
+    {
+      "limitation": "Basic anti-fingerprinting",
+      "description": "Does not aggressively randomize or spoof browser fingerprints, as doing so can weaken Chromium's security boundaries."
+    },
+    {
+      "limitation": "Safe Browsing trade-offs",
+      "description": "Enabling optional 'Standard' or 'Enhanced' Safe Browsing features can send URLs and page data to Google for analysis."
+    }
+  ],
+  "recommendations": {
+    "everyday_browsing": "Vanadium paired with a private DNS service",
+    "out_of_the_box_ad_blocking": "Brave (note: slightly increases device attack surface)",
+    "maximum_anonymity": "Tor Browser"
+  },
+  "sources": [
+    {
+      "title": "Reddit r/GrapheneOS - Vanadium privacy",
+      "url": "https://www.reddit.com/r/GrapheneOS/comments/1q1ezh1/is_vanadium_basically_the_most_private_browser_on/"
+    },
+    {
+      "title": "GrapheneOS Forum - Webapps privacy and security",
+      "url": "https://discuss.grapheneos.org/d/29604-how-privatesecure-are-webapps"
+    }
+  ]
+}

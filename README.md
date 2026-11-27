@@ -31,6 +31,7 @@ web engine the OS already has (WebKit on macOS, WebKitGTK on Linux), with a smal
   moving searches between projects, and Markdown export.
 - **Full-text search** across titles, questions, answers, tags and project names. It's fuzzy and
   prefix-matching, with highlighted snippets (⌘/Ctrl K).
+- **Import** existing searches from `.md` / `.json` exports (drag and drop or file picker).
 - **Sources** are captured for every answer and open in your normal browser.
 - **Plain files you own.** Each conversation is a JSON file with a readable `.md` copy next to it.
 - **Sync** to a GitHub repository (one commit per sync through the API, so git doesn't need to be installed)
@@ -96,6 +97,23 @@ AI Search/
 Records are identified by the `id` inside each file. File names are only there to make the folder readable,
 so renaming a search or moving it to another project just moves the file. The `.md` copies are generated and
 never read back. **Reload from disk** (Settings → General) picks up any edits you make outside the app.
+
+## Importing searches you already have
+
+Choose **Import…** in the sidebar, or drop files or folders anywhere on the window. You get a preview of what
+will be created, and you can choose a project to put the searches in.
+
+| Input | How it's read |
+| --- | --- |
+| **`.md`** (recommended) | The first `#` heading becomes the title and question. The rest becomes the answer, with formatting kept. A trailing **References** / **Sources** list becomes source cards. YAML front matter (`title`, `date`) is used if present. |
+| **`.json`** | Any shape. The title comes from `topic`/`title`/`query`, and `answer`/`content`/`markdown` is used as-is. Otherwise `summary` plus the remaining keys are turned into Markdown sections. `sources` become source cards. A JSON list imports several searches. |
+| **`.md` + `.json` with the same name** | Combined into one search: the Markdown answer (full wording) plus sources and date from the JSON. |
+| This app's own files | `.json` conversations and Markdown exports are restored with every turn. |
+| `.txt` | The first line is the title, the rest is the answer. |
+
+Imported searches get the tag `imported`, so you can find them with a library search for "imported".
+Files that are already in your library are flagged and unticked by default. You can ask follow-ups on an
+imported search: it continues in a new Google thread, with the earlier question included as context.
 
 ## Sync
 

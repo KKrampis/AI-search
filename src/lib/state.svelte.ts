@@ -44,6 +44,9 @@ class AppState {
   settingsTab = $state<"general" | "google" | "sync" | "about">("general");
   dialog = $state<DialogState | null>(null);
   projectEditor = $state<ProjectEditorState | null>(null);
+  /** Import window: open, optionally with paths to read right away (drag & drop). */
+  importer = $state<{ paths: string[] } | null>(null);
+  dragging = $state(false);
   toasts = $state<Toast[]>([]);
 
   sync = $state({ running: false, lastAt: 0, error: "" as string, message: "" });
@@ -279,6 +282,37 @@ export async function deleteProject(id: string) {
   } catch (e) {
     toast("Delete failed: " + errorText(e), "error");
   }
+}
+
+// ----------------------------------------------------------------- import
+
+/** Save imported conversations. Returns how many were saved. */
+export async function importConversations(convs: Conversation[], projectId: string | null): Promise<number> {
+  let saved = 0;
+  const existing = new Set(app.conversations.map((c) => c.id));
+  const added: Conversation[] = [];
+  for (const c0 of convs) {
+    const c: Conversation = $state.snapshot(c0) as Conversation;
+    // Never overwrite a search that is already in the library: import a copy.
+    if (existing.has(c.id)) c.id = uid();
+    // Keep a conversation's own project if it exists here, otherwise use the chosen one.
+    if (!c.projectId || !app.project(c.projectId)) c.projectId = projectId;
+    try {
+      await api.saveConversation(c);
+      added.push(c);
+      existing.add(c.id);
+      saved++;
+    } catch (e) {
+      toast(`Couldn't import “${c.title}”: ${errorText(e)}`, "error");
+    }
+  }
+  if (added.length) {
+    app.conversations = [...added, ...app.conversations];
+    app.index.rebuild(app.conversations, app.projects);
+    app.indexVersion++;
+    scheduleAutoSync();
+  }
+  return saved;
 }
 
 // ------------------------------------------------------------------- sync
