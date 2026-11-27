@@ -6,7 +6,7 @@ full-text search. The library can optionally sync to **GitHub** and **JSONBin.io
 
 ![Home](docs/screenshots/home.png)
 
-| Conversation | Library search |
+| Conversation | Library search (dark theme) |
 | --- | --- |
 | ![Conversation](docs/screenshots/chat.png) | ![Search](docs/screenshots/search.png) |
 

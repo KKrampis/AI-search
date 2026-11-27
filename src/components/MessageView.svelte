@@ -40,6 +40,7 @@
 
 {#if message.role === "user"}
   <div class="user">
+    <div class="q-icon"><Icon name="search" size={14} stroke={2.2} /></div>
     <div class="bubble">
       {message.content}
       {#if message.sent}
@@ -50,7 +51,7 @@
   </div>
 {:else}
   <div class="bot">
-    <div class="avatar"><Icon name="sparkle" size={13} filled stroke={0} /></div>
+    <div class="avatar brand-tile"><Icon name="lens" size={14} stroke={2.2} /></div>
     <div class="body">
       {#if message.content}
         <!-- Links are opened in the system browser. -->
@@ -116,15 +117,17 @@
 {/if}
 
 <style>
-  .user { display: flex; justify-content: flex-end; margin: 26px 0 16px; }
+  /* The question reads as a heading for the answer below it. */
+  .user { display: flex; align-items: flex-start; gap: 12px; margin: 34px 0 14px; padding-top: 22px; border-top: 1px solid var(--border); }
+  .q-icon { width: 26px; height: 26px; border-radius: 8px; flex: none; display: grid; place-items: center; color: var(--accent); background: var(--accent-soft); margin-top: 2px; }
   .bubble {
-    max-width: 82%; background: var(--bg-user); padding: 10px 15px; border-radius: 16px 16px 4px 16px;
-    white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; line-height: 1.5;
+    flex: 1; min-width: 0; font-family: var(--font-display); font-size: 19px; font-weight: 650; letter-spacing: -0.015em;
+    line-height: 1.35; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text); padding-top: 1px;
   }
-  .sent-toggle { display: block; margin-top: 6px; border: none; background: none; padding: 0; font-size: 11.5px; color: var(--text-3); text-decoration: underline; }
-  .sent { margin: 6px 0 0; font-family: var(--font-mono); font-size: 12px; white-space: pre-wrap; color: var(--text-2); }
+  .sent-toggle { display: block; margin-top: 6px; border: none; background: none; padding: 0; font-family: var(--font); font-size: 11.5px; font-weight: 400; letter-spacing: 0; color: var(--text-3); text-decoration: underline; }
+  .sent { margin: 6px 0 0; font-family: var(--font-mono); font-size: 12px; font-weight: 400; letter-spacing: 0; white-space: pre-wrap; color: var(--text-2); }
   .bot { display: flex; gap: 12px; margin-bottom: 8px; }
-  .avatar { width: 26px; height: 26px; border-radius: 8px; background: var(--accent); color: #fff; display: grid; place-items: center; flex: none; margin-top: 2px; }
+  .avatar { width: 26px; height: 26px; border-radius: 8px; flex: none; margin-top: 2px; }
   .body { flex: 1; min-width: 0; }
   .status { display: flex; align-items: center; gap: 8px; color: var(--text-2); font-size: 13.5px; margin-top: 8px; min-height: 30px; }
   .status .btn { margin-left: 2px; }
@@ -136,14 +139,14 @@
   .notice.err > :global(.icon) { color: var(--danger); }
   .note { margin-top: 8px; font-size: 12.5px; color: var(--text-3); font-style: italic; }
   .sources { margin-top: 16px; }
-  .src-head { font-size: 12px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; }
+  .src-head { font-size: 10.5px; font-weight: 700; color: var(--text-3); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.06em; }
   .src-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px; }
   .src {
     display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 8px; text-align: left;
     padding: 7px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-elev); min-width: 0;
   }
-  .src:hover { border-color: var(--border-strong); }
-  .n { grid-row: span 2; font-size: 11px; color: var(--text-3); background: var(--bg-hover); border-radius: 5px; min-width: 18px; height: 18px; display: grid; place-items: center; margin-top: 1px; }
+  .src:hover { border-color: var(--accent); }
+  .n { grid-row: span 2; font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 5px; min-width: 18px; height: 18px; display: grid; place-items: center; margin-top: 1px; }
   .st { font-size: 12.5px; font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sd { font-size: 11.5px; color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .src.more { display: flex; align-items: center; justify-content: center; color: var(--text-2); font-size: 12.5px; }

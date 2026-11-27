@@ -76,7 +76,8 @@
   .sort { width: 170px; height: 38px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
   .card { text-align: left; display: flex; flex-direction: column; gap: 6px; padding: 16px; min-height: 120px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-elev); transition: border-color 0.12s, box-shadow 0.12s; }
-  .card:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+  .card { border-top: 2px solid transparent; }
+  .card:hover { border-color: var(--border-strong); border-top-color: var(--accent); box-shadow: var(--shadow); }
   .name { font-weight: 650; font-size: 15px; display: flex; align-items: center; gap: 8px; }
   .name :global(.icon) { color: var(--accent); }
   .desc { color: var(--text-2); font-size: 13px; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

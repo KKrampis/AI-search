@@ -38,13 +38,13 @@
 
 <aside class="sidebar">
   <div class="brand">
-    <div class="logo"><Icon name="sparkle" size={14} filled stroke={0} /></div>
-    <span>AI Search</span>
+    <div class="logo brand-tile"><Icon name="lens" size={15} stroke={2.2} /></div>
+    <span>AI<span class="thin">Search</span></span>
   </div>
 
   <div class="nav">
     <button class="new" onclick={() => newSearch(null)}>
-      <span class="plus"><Icon name="plus" size={14} stroke={2.4} /></span>
+      <Icon name="plus" size={15} stroke={2.4} />
       New search
       <span class="kbd">{shortcut("N")}</span>
     </button>
@@ -101,34 +101,40 @@
     background: var(--bg-sidebar); border-right: 1px solid var(--border);
     display: flex; flex-direction: column; min-height: 0;
   }
-  .brand { display: flex; align-items: center; gap: 9px; padding: 16px 16px 10px; font-family: var(--font-serif); font-size: 18px; font-weight: 500; }
-  .logo { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: #fff; display: grid; place-items: center; }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 16px 16px 12px; font-family: var(--font-display); font-size: 16.5px; font-weight: 800; letter-spacing: -0.02em; }
+  .thin { font-weight: 400; color: var(--text-2); margin-left: 1px; }
+  .logo { width: 26px; height: 26px; border-radius: 8px; box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3); }
   .nav { padding: 4px 8px; display: flex; flex-direction: column; gap: 1px; }
   .new {
-    display: flex; align-items: center; gap: 10px; padding: 7px 8px; margin-bottom: 4px;
-    border: none; background: none; border-radius: var(--radius-sm); font-weight: 600; color: var(--accent);
+    display: flex; align-items: center; gap: 9px; padding: 8px 10px; margin: 0 0 8px;
+    border: 1px solid transparent; background: var(--accent); color: var(--accent-text);
+    border-radius: var(--radius); font-weight: 600; box-shadow: 0 1px 3px rgba(13, 148, 136, 0.35);
+    transition: background 0.12s;
   }
-  .new:hover { background: var(--bg-hover); }
-  .new .plus { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; }
+  .new:hover { background: var(--accent-hover); }
+  .new .kbd { color: inherit; opacity: 0.75; border-color: currentColor; }
   .new .kbd, .nav-item .kbd { margin-left: auto; }
   .nav-item {
     display: flex; align-items: center; gap: 10px; padding: 7px 10px; border: none; background: none;
     border-radius: var(--radius-sm); color: var(--text-2); font-size: 13.5px; text-align: left;
   }
   .nav-item:hover { background: var(--bg-hover); color: var(--text); }
-  .nav-item.active { background: var(--bg-active); color: var(--text); font-weight: 550; }
+  .nav-item.active { background: var(--bg-active); color: var(--accent); font-weight: 600; }
+  .nav-item.active :global(.icon) { color: var(--accent); }
   .count { margin-left: auto; font-size: 12px; color: var(--text-3); }
   .filter { margin: 10px 12px 4px; display: flex; align-items: center; gap: 7px; padding: 0 9px; height: 30px; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text-3); background: var(--bg); }
   .filter:focus-within { border-color: var(--border-strong); }
   .filter input { border: none; outline: none; background: none; flex: 1; min-width: 0; font-size: 13px; }
   .recents { flex: 1; overflow-y: auto; padding: 4px 8px 12px; min-height: 0; }
-  .group { font-size: 11.5px; font-weight: 600; color: var(--text-3); padding: 12px 10px 4px; }
+  .group { font-size: 10.5px; font-weight: 700; color: var(--text-3); padding: 14px 10px 4px; text-transform: uppercase; letter-spacing: 0.06em; }
   .conv {
     display: flex; align-items: center; gap: 7px; width: 100%; padding: 6px 10px; border: none; background: none;
     border-radius: var(--radius-sm); font-size: 13.5px; color: var(--text); text-align: left;
   }
   .conv:hover { background: var(--bg-hover); }
-  .conv.active { background: var(--bg-active); }
+  .conv { position: relative; }
+  .conv.active { background: var(--bg-active); color: var(--accent); font-weight: 550; }
+  .conv.active::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 3px; border-radius: 3px; background: var(--gradient); }
   .conv .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .conv :global(.star) { color: var(--accent); }
   .conv .spinner { width: 11px; height: 11px; }

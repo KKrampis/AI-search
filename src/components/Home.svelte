@@ -29,10 +29,13 @@
 
 <div class="page">
   <div class="home">
-    <h1 class="hello">
-      <span class="mark"><Icon name="sparkle" size={26} filled stroke={0} /></span>
-      {project ? project.name : greeting}
-    </h1>
+    {#if project}
+      <div class="eyebrow"><Icon name="folder" size={13} /> Project</div>
+      <h1 class="hello">{project.name}</h1>
+    {:else}
+      <div class="eyebrow">{greeting}</div>
+      <h1 class="hello">What do you want to <span class="gradient-text">find out?</span></h1>
+    {/if}
     {#if project?.description}<p class="desc">{project.description}</p>{/if}
 
     <Composer hero autofocus onsubmit={submit} blocked={!!app.busy} placeholder={project ? `Search in ${project.name}…` : "Ask Google AI Mode anything…"}>
@@ -75,19 +78,20 @@
 
 <style>
   .home { max-width: 720px; margin: 0 auto; padding: 14vh 28px 48px; }
-  .hello { font-family: var(--font-serif); font-weight: 400; font-size: 38px; letter-spacing: -0.015em; text-align: center; margin: 0 0 24px; display: flex; align-items: center; justify-content: center; gap: 12px; }
-  .mark { color: var(--accent); display: inline-grid; }
+  .eyebrow { text-align: center; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .hello { font-family: var(--font-display); font-weight: 800; font-size: 34px; letter-spacing: -0.035em; line-height: 1.15; text-align: center; margin: 0 0 26px; }
   .desc { text-align: center; color: var(--text-2); margin: -12px 0 24px; }
   .hint { font-size: 12px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .suggest { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 18px; }
-  .sugg { border: 1px solid var(--border); background: var(--bg-elev); border-radius: 999px; padding: 6px 13px; font-size: 13px; color: var(--text-2); }
-  .sugg:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
-  .first-run { display: flex; gap: 12px; margin-top: 36px; padding: 14px 16px; border-radius: var(--radius); background: var(--accent-soft); color: var(--text-2); font-size: 13px; line-height: 1.55; }
+  .sugg { border: 1px solid var(--border); background: var(--bg-elev); border-radius: var(--radius-sm); padding: 6px 12px; font-size: 13px; color: var(--text-2); }
+  .sugg:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .first-run { display: flex; gap: 12px; margin-top: 36px; padding: 14px 16px; border-radius: var(--radius); border: 1px solid var(--border); border-left: 3px solid var(--accent); background: var(--bg-elev); color: var(--text-2); font-size: 13px; line-height: 1.55; }
   .first-run :global(.icon) { color: var(--accent); margin-top: 2px; }
   .recent-head { display: flex; justify-content: space-between; align-items: center; margin: 34px 2px 8px; font-size: 13px; font-weight: 600; color: var(--text-2); }
   .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .card { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 12px 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-elev); }
-  .card:hover { border-color: var(--border-strong); }
+  .card { border-top: 2px solid transparent; }
+  .card:hover { border-color: var(--border-strong); border-top-color: var(--accent); }
   .ct { font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cm { font-size: 12px; color: var(--text-3); }
 </style>
