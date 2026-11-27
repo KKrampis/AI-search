@@ -26,6 +26,7 @@ export const api = {
   deleteConversation: (id: string) => invoke<void>("delete_conversation", { id }),
   exportConversation: (id: string, path: string) => invoke<void>("export_conversation", { id, path }),
   revealLibrary: () => invoke<void>("reveal_library"),
+  revealDebug: () => invoke<void>("reveal_debug"),
   openUrl: (url: string) => invoke<void>("open_url", { url }),
   saveDebugFile: (name: string, content: string) => invoke<string>("save_debug_file", { name, content }),
   readImportFiles: (paths: string[]) =>

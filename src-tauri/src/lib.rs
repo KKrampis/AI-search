@@ -123,6 +123,14 @@ fn reveal_library(app: AppHandle, state: State<AppState>) -> AppResult<()> {
     app.opener().open_path(root, None::<&str>).map_err(|e| AppError::msg(e.to_string()))
 }
 
+/// Open <library>/.aisearch/debug (page snapshots) in the file manager.
+#[tauri::command]
+fn reveal_debug(app: AppHandle, state: State<AppState>) -> AppResult<()> {
+    let dir = state.library.lock().unwrap().root().join(library::META_DIR).join("debug");
+    std::fs::create_dir_all(&dir)?;
+    app.opener().open_path(dir.to_string_lossy().to_string(), None::<&str>).map_err(|e| AppError::msg(e.to_string()))
+}
+
 #[tauri::command]
 fn open_url(app: AppHandle, url: String) -> AppResult<()> {
     if !(url.starts_with("https://") || url.starts_with("http://")) {
@@ -310,6 +318,7 @@ pub fn run() {
             delete_conversation,
             export_conversation,
             reveal_library,
+            reveal_debug,
             open_url,
             save_debug_file,
             read_import_files,

@@ -15,6 +15,7 @@ fn main() {
             "delete_conversation",
             "export_conversation",
             "reveal_library",
+            "reveal_debug",
             "open_url",
             "save_debug_file",
             "read_import_files",

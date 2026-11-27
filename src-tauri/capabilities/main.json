@@ -19,6 +19,7 @@
     "allow-delete-conversation",
     "allow-export-conversation",
     "allow-reveal-library",
+    "allow-reveal-debug",
     "allow-open-url",
     "allow-save-debug-file",
     "allow-read-import-files",
