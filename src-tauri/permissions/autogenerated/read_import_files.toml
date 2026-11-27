@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-read-import-files"
+description = "Enables the read_import_files command without any pre-configured scope."
+commands.allow = ["read_import_files"]
+
+[[permission]]
+identifier = "deny-read-import-files"
+description = "Denies the read_import_files command without any pre-configured scope."
+commands.deny = ["read_import_files"]

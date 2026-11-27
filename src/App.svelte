@@ -3,6 +3,8 @@
   import ConversationView from "./components/ConversationView.svelte";
   import Dialog from "./components/Dialog.svelte";
   import Home from "./components/Home.svelte";
+  import ImportDialog from "./components/ImportDialog.svelte";
+  import { getCurrentWebview } from "@tauri-apps/api/webview";
   import ProjectEditor from "./components/ProjectEditor.svelte";
   import ProjectView from "./components/ProjectView.svelte";
   import ProjectsView from "./components/ProjectsView.svelte";
@@ -16,6 +18,17 @@
   onMount(() => {
     void initGoogle();
     void init();
+    // Dropping files or folders anywhere on the window opens the importer.
+    const un = getCurrentWebview().onDragDropEvent((e) => {
+      const p = e.payload;
+      if (p.type === "enter" || p.type === "over") app.dragging = true;
+      else if (p.type === "leave") app.dragging = false;
+      else if (p.type === "drop") {
+        app.dragging = false;
+        if (p.paths.length) app.importer = { paths: p.paths };
+      }
+    });
+    return () => void un.then((f) => f());
   });
 
   function onkeydown(e: KeyboardEvent) {
@@ -60,6 +73,10 @@
 </div>
 
 {#if app.showSettings && app.settings}<SettingsModal />{/if}
+{#if app.importer}<ImportDialog />{/if}
+{#if app.dragging && !app.importer}
+  <div class="dropzone"><div><b>Drop to import</b><span>.md, .json and .txt exports, or folders of them</span></div></div>
+{/if}
 <ProjectEditor />
 <Dialog />
 <Toasts />
@@ -67,5 +84,8 @@
 <style>
   .shell { display: flex; height: 100vh; overflow: hidden; }
   .main { flex: 1; min-width: 0; height: 100%; position: relative; }
+  .dropzone { position: fixed; inset: 10px; z-index: 300; border: 2px dashed var(--accent); border-radius: 16px; background: color-mix(in srgb, var(--bg) 85%, transparent); display: grid; place-items: center; pointer-events: none; }
+  .dropzone div { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 18px; color: var(--accent); }
+  .dropzone span { font-size: 13px; color: var(--text-2); }
   .loading { height: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--text-3); }
 </style>

@@ -1,5 +1,6 @@
 mod error;
 mod google;
+mod import;
 mod library;
 mod markdown;
 mod merge;
@@ -141,6 +142,14 @@ fn save_debug_file(state: State<AppState>, name: String, content: String) -> App
     let path = dir.join(safe);
     std::fs::write(&path, content)?;
     Ok(path.to_string_lossy().to_string())
+}
+
+/// Read the .md / .json / .txt files (folders are walked) chosen for import.
+#[tauri::command]
+async fn read_import_files(paths: Vec<String>) -> AppResult<import::ImportRead> {
+    tauri::async_runtime::spawn_blocking(move || import::read_files(&paths))
+        .await
+        .map_err(|e| AppError::msg(e.to_string()))?
 }
 
 // --------------------------------------------------------------- google
@@ -303,6 +312,7 @@ pub fn run() {
             reveal_library,
             open_url,
             save_debug_file,
+            read_import_files,
             google_ask,
             google_cancel,
             google_show,
