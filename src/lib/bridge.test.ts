@@ -124,6 +124,23 @@ describe("google bridge", () => {
     expect(r.markdown).toContain("Tauri is a toolkit");
   });
 
+  it("refuses Google's basic (heirloom) home page instead of capturing it", async () => {
+    // Shape of the page Google served the macOS WebKit default user agent (from a real snapshot).
+    const BASIC = `<!doctype html><html><head><script>window.google={sn:"webhp",kHL:"en"};</script></head><body>
+      <div id="gb"><a href="https://mail.google.com/mail/">Gmail</a><a href="https://accounts.google.com/ServiceLogin">Sign in</a></div>
+      <center><form action="/search" name="f"><input class="lst" name="q"><input class="lsb" value="Google Search" name="btnG" type="submit">
+      <input class="lsb" value="I'm Feeling Lucky" name="btnI" type="submit"></form>
+      <span id="footer"><a href="/intl/en/ads/">Advertising</a></span></center></body></html>`;
+    const payload = Buffer.from(JSON.stringify(job({ jobId: "jb", timeoutSecs: 30, stableMs: 800 }))).toString("base64url");
+    const { bridge, reports } = load(BASIC, `https://www.google.com/webhp?hl=en#__ais=${payload}`);
+    expect(bridge._test.basicPage()).toBe(true);
+    await new Promise((r) => setTimeout(r, 600));
+    const err = reports.find((r) => r.kind === "error");
+    expect(err).toMatchObject({ jobId: "jb", code: "basic_page" });
+    expect(reports.some((r) => r.kind === "done" || r.kind === "partial")).toBe(false);
+    expect(load().bridge._test.basicPage()).toBe(false);
+  });
+
   it("detects CAPTCHA and consent pages", () => {
     expect(load("<html><body><form id='captcha-form'></form></body></html>", "https://www.google.com/sorry/index").bridge._test.blockedReason()).toBe("captcha");
     expect(load("<html><body></body></html>", "https://consent.google.com/ml").bridge._test.blockedReason()).toBe("consent");

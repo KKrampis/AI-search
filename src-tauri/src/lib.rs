@@ -51,7 +51,7 @@ fn get_settings(state: State<AppState>) -> Settings {
 }
 
 #[tauri::command]
-fn save_settings(state: State<AppState>, settings: Settings) -> AppResult<LibraryPayload> {
+fn save_settings(app: AppHandle, state: State<AppState>, settings: Settings) -> AppResult<LibraryPayload> {
     let old = state.settings.lock().unwrap().clone();
     let mut lib = state.library.lock().unwrap();
     if old.library_dir() != settings.library_dir() {
@@ -60,6 +60,10 @@ fn save_settings(state: State<AppState>, settings: Settings) -> AppResult<Librar
         lib.set_write_markdown(settings.write_markdown)?;
     }
     settings.save(&state.settings_path)?;
+    // The user agent is fixed when the Google window is created: recreate it.
+    if old.google.user_agent.trim() != settings.google.user_agent.trim() {
+        google::reset(&app)?;
+    }
     *state.settings.lock().unwrap() = settings;
     Ok(payload(&lib))
 }

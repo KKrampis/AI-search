@@ -392,6 +392,26 @@
     return null;
   }
 
+  /**
+   * Google's stripped-down pages for unrecognised browsers ("heirloom"): no
+   * AI Mode, so capturing them would only save the home page or plain links.
+   */
+  function basicPage() {
+    var g = window.google;
+    if (g && (g.sn === "webhp" || g.sn === "heirloom-hp")) return true;
+    if (document.querySelector('form[name="f"] input.lst, input.lsb[name="btnI"]')) return true;
+    var pmc = g && g.pmc && g.pmc.sb_he;
+    return !!(pmc && /heirloom/.test(pmc.client || ""));
+  }
+
+  function basicPageError(job) {
+    stopWatching();
+    clearJob();
+    send({ jobId: job.jobId, kind: "error", code: "basic_page", url: location.href,
+      message: "Google served its basic page, which has no AI Mode. This happens when Google doesn't recognise the browser: " +
+        "check Settings → Google → Advanced → User agent (leave it empty for the Safari default), then try again." });
+  }
+
   function looksBusy(roots) {
     for (var i = 0; i < roots.length; i++) {
       if (roots[i].querySelector('[aria-busy="true"], [role="progressbar"]')) return true;
@@ -430,6 +450,8 @@
         return;
       }
       state.blockedSent = null;
+
+      if (basicPage()) return basicPageError(job);
 
       var res;
       try { res = extractNew(job); } catch (e) {
@@ -549,6 +571,7 @@
         message: "Google needs your attention in the Google window before it can continue." });
       return;
     }
+    if (basicPage()) return basicPageError(job);
     var input = findInput(job.inputSelectors);
     if (!input) {
       send({ jobId: job.jobId, kind: "error", code: "no_input", url: location.href,
@@ -588,7 +611,7 @@
     },
     toMarkdown: toMarkdown,
     // Exposed for the unit tests (src/lib/bridge.test.ts).
-    _test: { extractNew: extractNew, collectSources: collectSources, cleanUrl: cleanUrl, blockedReason: blockedReason, findInput: findInput },
+    _test: { basicPage: basicPage, extractNew: extractNew, collectSources: collectSources, cleanUrl: cleanUrl, blockedReason: blockedReason, findInput: findInput },
   };
 
   function onReady() {
